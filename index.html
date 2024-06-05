@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <script src="form"></script>
+    <title>Isafeparking.PoncePark</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div>
+        <img id="ponce" src="imagens/Design sem nome(24).webp" alt="PoncePark">
+    </div>
+    <div><h1>Selecione o período de reserva</h1></div>
+<!-- Campos de Data e Hora -->
+<form action="https://web.whatsapp.com/" method="post">
+    <div class="entrada">
+        <label for="data_entrada">Data de Entrada:</label>
+        <input type="date" id="data_entrada" required>
+        <label for="hora_entrada">Hora de Entrada:</label>
+        <input type="time" id="hora_entrada" required>
+    </div>
+    <div class="saida">
+        <label for="data_saida">Data de Saída:</label>
+        <input type="date" id="data_saida" required>
+        <label for="hora_saida">Hora de Saída:</label>
+        <input type="time" id="hora_saida" required>
+    </div>
+    <!-- Campo de Seleção de Tipo de Vaga -->
+    <div class="tipo">
+        <label for="tipo_vaga">Tipo de Vaga:</label>
+        <select id="tipo_vaga" required>
+        <option value="descoberta">Vaga Descoberta</option>
+        <option value="coberta">Vaga Coberta</option>
+        </select>
+    </div>
+    <!-- Campo para Exibir o Resultado -->
+    <div id="resultado"></div>
+
+    <script>
+
+        function calcularValorPorDia() {
+            var dataEntrada = document.getElementById('data_entrada').value;
+            var horaEntrada = document.getElementById('hora_entrada').value;
+            var dataSaida = document.getElementById('data_saida').value;
+            var horaSaida = document.getElementById('hora_saida').value;
+            var tipoVaga = document.getElementById('tipo_vaga').value;
+
+            if (!dataEntrada || !horaEntrada || !dataSaida || !horaSaida) {
+                document.getElementById('resultado').innerHTML = 'Por favor, preencha todas as datas e horas.';
+                return;
+            }
+
+            var entrada = new Date(dataEntrada + 'T' + horaEntrada);
+            var saida = new Date(dataSaida + 'T' + horaSaida);
+
+            if (saida <= entrada) {
+                document.getElementById('resultado').innerHTML = 'A data e hora de saída devem ser posteriores à data e hora de entrada.';
+                return;
+            }
+
+            var diffMilissegundos = saida - entrada;
+            var diffDias = diffMilissegundos / (1000 * 60 * 60 * 24);
+
+            if (diffDias < 3) {
+                diffDias = 3; // Garantir um mínimo de 3 dias
+            }
+
+            // Adicionar valor fixo com base no tipo de vaga
+            var valorBase = 0;
+            if (tipoVaga === 'coberta') {
+                valorBase = 27.99;
+            } else {
+                valorBase = 17.09;
+            }
+
+            var resultado = valorBase * diffDias;
+            document.getElementById('resultado').innerHTML = 'Valor total: R$ ' + resultado.toFixed(2).replace('.', ',');
+        }
+
+        document.getElementById('data_entrada').addEventListener('input', calcularValorPorDia);
+        document.getElementById('hora_entrada').addEventListener('input', calcularValorPorDia);
+        document.getElementById('data_saida').addEventListener('input', calcularValorPorDia);
+        document.getElementById('hora_saida').addEventListener('input', calcularValorPorDia);
+        document.getElementById('tipo_vaga').addEventListener('change', calcularValorPorDia);
+    </script>
+    <hr class="primeira_linha">
+        <div class="nome">
+            <label for="nome"></label>
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="inome" placeholder="Digite seu nome" maxlength="30" size="25" required>
+        </div>
+        <div class="sobrenome">
+            <label for="sobrenome"></label>
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="isobrenome" placeholder="Digite seu sobrenome" maxlength="30" size="25" required>
+        </div>
+        <div class="email">
+            <label for="Email"></label>
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" id="Email" placeholder="Digite seu email" size="40" required>
+        </div>
+        <div class="whatsapp">
+            <label for="whatsapp"></label>
+            <i class="fa-brands fa-whatsapp"></i>
+            <input type="tel" id="whatsapp" placeholder="Digite seu número" maxlength="12" pattern="[0-9]{11}" required><br><br>
+        </div>
+        <div class="botao">
+            <button type="button" onclick="enviarWhatsApp()">Enviar WhatsApp</button>
+        </div>
+</form>
+<script>
+    function enviarWhatsApp() {
+        var dataEntrada = document.getElementById('data_entrada').value;
+        var horaEntrada = document.getElementById('hora_entrada').value;
+        var dataSaida = document.getElementById('data_saida').value;
+        var horaSaida = document.getElementById('hora_saida').value;
+        var nome = document.getElementById('nome').value;
+        var sobrenome = document.getElementById('sobrenome').value;
+        var email = document.getElementById('email').value;
+        var whatsapp = document.getElementById('whatsapp');
+        var texto = `data_entrada: ${dataEntrada}\nhora_entrada: ${horaEntrada}\ndata_saida: ${dataSaida}\nhora_saida: ${horaSaida}\nnome: ${nome}\nsobrenome: ${sobrenome}\nemail: ${email}\nwhatsapp: ${whatsapp}`;
+
+        var url = `https://api.whatsapp.com/send?phone=55${celular}&text=${encodeURIComponent(texto)}`;
+        window.open(url, '_blank');
+    }
+</script>
+<hr class="segunda_linha">
+</body>
+<footer>
+    <div class="rodape">
+        &copy;2024 Desenvolvido por Junior Mendes.
+    </div>
+</footer>
+</html>

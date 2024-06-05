@@ -1,0 +1,80 @@
+@charset "utf-8";
+
+body {
+    border: 1px solid black ;
+    width: auto;
+    padding: 10px;
+    border-color: orange;
+}
+
+#ponce {
+    width: 176px;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+.entrada {
+    width: auto;
+    padding: 7px;
+
+}
+
+.saida {
+    width: auto;
+    padding: 7px;
+}
+
+.tipo {
+    width: auto;
+    padding: 7px;
+}
+
+.botao {
+    padding: 8px;
+    width: 100px;
+    color: #fff;
+    background-color: green;
+    border: none;
+    border-radius: .5em;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.botao:hover {
+        background-color: greenyellow;
+}
+
+.nome {
+    font-size: 20px;
+    padding: 2px;
+}
+
+.sobrenome {
+    font-size: 20px;
+    padding: 2px;
+}
+
+.email {
+    font-size: 20px;
+    padding: 1px;
+}
+
+.whatsapp {
+    font-size: 20px;
+    padding: 2px;
+}
+
+.rodape {
+    color: black;
+    font-weight: bold;
+}
+
+.primeira_linha {
+    border-color: orange;
+}
+
+.segunda_linha {
+    border-color: orange;
+}
